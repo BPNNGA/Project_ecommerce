@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { backendUrl } from '../App';
 
+
 const Dashboard = ({ token }) => {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,7 +48,7 @@ const Dashboard = ({ token }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
           <span className="text-lg text-[var(--admin-muted)]">Total Sales</span>
-          <span className="text-2xl font-bold text-green-600 mt-2">${totalSales}</span>
+          <span className="text-2xl font-bold text-green-600 mt-2">Rs. {totalSales}</span>
         </div>
         <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
           <span className="text-lg text-[var(--admin-muted)]">Total Orders</span>

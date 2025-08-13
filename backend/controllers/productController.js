@@ -135,3 +135,48 @@ const getProductById = async (req, res) => {
 
 
 export {addProduct, listProduct, removeProduct, singleProduct, getProductById }
+ 
+// Update product details (admin)
+const updateProduct = async (req, res) => {
+    try {
+        const { id } = req.params
+        const updates = req.body || {}
+
+        // Whitelist of updatable fields
+        const allowed = [
+            'name','description','price','category','subCategory','sizes','bestseller','brand','tags','stock'
+        ]
+        const payload = {}
+        for (const key of allowed) {
+            if (updates[key] !== undefined) payload[key] = updates[key]
+        }
+
+        if (payload.price !== undefined) {
+            const p = Number(payload.price)
+            if (!Number.isFinite(p) || p <= 0) return res.status(400).json({success:false, message:'Price must be a positive number'})
+            payload.price = p
+        }
+        if (payload.stock !== undefined) {
+            const s = Number(payload.stock)
+            if (!Number.isInteger(s) || s < 0) return res.status(400).json({success:false, message:'Stock must be a non-negative integer'})
+            payload.stock = s
+        }
+        if (payload.sizes !== undefined) {
+            let parsed = payload.sizes
+            if (typeof parsed === 'string') {
+                try { parsed = JSON.parse(parsed) } catch { return res.status(400).json({success:false, message:'Sizes must be a valid JSON array'}) }
+            }
+            if (!Array.isArray(parsed)) return res.status(400).json({success:false, message:'Sizes must be an array'})
+            payload.sizes = parsed
+        }
+
+        const product = await productModel.findByIdAndUpdate(id, payload, { new: true })
+        if (!product) return res.status(404).json({success:false, message:'Product not found'})
+        res.json({success:true, message:'Product updated successfully', product})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success:false, message:error.message})
+    }
+}
+
+export { updateProduct }

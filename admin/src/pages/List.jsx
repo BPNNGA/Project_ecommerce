@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { backendUrl, currency } from '../App';
 import { toast } from 'react-toastify';
 import { FaTrash, FaEye, FaEdit } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const List = ({token}) => {
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
@@ -53,11 +55,12 @@ const List = ({token}) => {
       
       <div className='bg-[var(--admin-surface)] rounded-xl shadow-lg overflow-hidden'>
         {/* Table Header */}
-        <div className='grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-4 px-6 bg-gradient-to-r from-[var(--admin-accent)] to-[var(--admin-accent2)] text-white font-semibold text-sm'>
+        <div className='grid grid-cols-[80px_1fr_140px_120px_140px_160px] items-center gap-4 py-4 px-6 bg-gradient-to-r from-[var(--admin-accent)] to-[var(--admin-accent2)] text-white font-semibold text-sm'>
           <span>Image</span>
           <span>Product Name</span>
           <span>Category</span>
           <span>Price</span>
+          <span>Stock</span>
           <span className='text-center'>Actions</span>
         </div>
 
@@ -66,7 +69,7 @@ const List = ({token}) => {
           {list.map((item, index) => (
             <div 
               key={index}
-              className='grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-4 py-4 px-6 border-b border-[var(--admin-accent)]/20 hover:bg-[var(--admin-accent)]/5 transition-all duration-200'
+              className='grid grid-cols-[80px_1fr_140px_120px_140px_160px] items-center gap-4 py-4 px-6 border-b border-[var(--admin-accent)]/20 hover:bg-[var(--admin-accent)]/5 transition-all duration-200'
             >
               <div className='flex items-center'>
                 <img 
@@ -87,21 +90,39 @@ const List = ({token}) => {
               <div>
                 <p className='font-bold text-lg text-[var(--admin-accent)]'>{currency}{item.price}</p>
               </div>
+              <div>
+                {typeof item.stock === 'number' ? (
+                  item.stock > 0 ? (
+                    <span className='px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold'>In stock: {item.stock}</span>
+                  ) : (
+                    <span className='px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold'>Out of Stock</span>
+                  )
+                ) : (
+                  <span className='text-[var(--admin-muted)] text-sm'>N/A</span>
+                )}
+              </div>
               <div className='flex items-center justify-center gap-2'>
                 <button 
-                  onClick={() => removeProduct(item._id)}
+                  onClick={() => {
+                    if (window.confirm('Delete this product permanently?')) {
+                      removeProduct(item._id)
+                    }
+                  }}
                   className='p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-all duration-200 hover:scale-105'
                   title="Delete Product"
                 >
                   <FaTrash className='w-4 h-4' />
                 </button>
-                <button 
+                <button
+                  onClick={() => navigate(`/product/${item._id}`)}
                   className='p-2 bg-[var(--admin-accent)] hover:bg-[var(--admin-accent2)] text-white rounded-lg transition-all duration-200 hover:scale-105'
                   title="View Details"
                 >
                   <FaEye className='w-4 h-4' />
                 </button>
+                
                 <button 
+                  onClick={() => navigate(`/product/${item._id}/edit`)}
                   className='p-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all duration-200 hover:scale-105'
                   title="Edit Product"
                 >

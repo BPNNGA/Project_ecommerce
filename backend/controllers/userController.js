@@ -37,7 +37,6 @@ const loginUser = async (req, res) => {
 
 
 
-    // 6hr 16 min 
 
 }
 

@@ -298,7 +298,7 @@ const Orders = ({ token }) => {
                     
                     <div className="flex items-center gap-3">
                       <button className="p-2 rounded-lg hover:bg-[var(--admin-accent)]/10 transition-all duration-300">
-                        <FaEye className="w-4 h-4 text-[var(--admin-accent)]" />
+                        <FaEye className="w-4 h-4" />
                       </button>
                       
                       <select 
