@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Sevillana&family=Yuji+Mai&display=swap');
+
+@import "tailwindcss";
+
+:root {
+    --admin-bg: #181824;
+    --admin-surface: #23233a;
+    --admin-accent: #a259ec;
+    --admin-accent2: #5f5fff;
+    --admin-text: #f3f3fa;
+    --admin-muted: #8a8aa0;
+}
+
+body {
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    transition: background 0.3s, color 0.3s;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--admin-accent);
+    font-family: 'Yuji Mai', serif;
+    letter-spacing: 0.5px;
+}
+
+input, select, textarea {
+    background: var(--admin-surface);
+    color: var(--admin-text);
+    border: 1px solid var(--admin-accent);
+    outline-color: var(--admin-accent2);
+    border-radius: 6px;
+    transition: border 0.2s, background 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--admin-accent2);
+    background: #23233aee;
+}
+
+button, .btn {
+    background: var(--admin-accent);
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.5em 1.5em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+button:hover, .btn:hover {
+    background: var(--admin-accent2);
+    color: #fff;
+    box-shadow: 0 2px 12px 0 #a259ec44;
+}
+
+.card, .surface {
+    background: var(--admin-surface);
+    border-radius: 16px;
+    box-shadow: 0 2px 16px 0 #0002;
+    padding: 2em;
+    margin-bottom: 2em;
+    transition: box-shadow 0.2s;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background: var(--admin-bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--admin-accent);
+    border-radius: 8px;
+}
+
+.active{
+    background-color: #ffebf5;
+    border-color: #c586a5;
+}
